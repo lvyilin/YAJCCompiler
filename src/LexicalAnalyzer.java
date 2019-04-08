@@ -67,7 +67,7 @@ public class LexicalAnalyzer {
     }
 
     private static void writeToken(BufferedWriter bw, int id, String token) throws IOException {
-        bw.write(String.format("%d\t%s\r\n", id, token));
+        bw.write(new LexicalToken(id, token).toString());
     }
 
 

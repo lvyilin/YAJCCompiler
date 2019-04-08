@@ -4,7 +4,9 @@ public class Compiler {
     public static void compile(String fileName) throws IOException {
         String baseName = getBaseName(fileName);
         String preprocessedFileName = baseName + ".i";
-        String lexFileName = baseName + ".lex";
+        String lexicalFileName = baseName + ".lex";
+        String syntaxFileName = baseName + ".syn";
+
 
         BufferedReader br1 = new BufferedReader(new FileReader(fileName));
         BufferedWriter bw1 = new BufferedWriter(new FileWriter(preprocessedFileName));
@@ -13,10 +15,20 @@ public class Compiler {
         bw1.close();
 
         BufferedReader br2 = new BufferedReader(new FileReader(preprocessedFileName));
-        BufferedWriter bw2 = new BufferedWriter(new FileWriter(lexFileName));
+        BufferedWriter bw2 = new BufferedWriter(new FileWriter(lexicalFileName));
         LexicalAnalyzer.analyze(br2, bw2);
         br2.close();
         bw2.close();
+
+        BufferedReader br3 = new BufferedReader(new FileReader(lexicalFileName));
+        BufferedWriter bw3 = new BufferedWriter(new OutputStreamWriter(System.out));
+//        BufferedWriter bw3 = new BufferedWriter(new FileWriter(syntaxFileName));
+
+        SyntaxAnalyzer syntaxAnalyzer = new SyntaxAnalyzer(br3, bw3);
+        syntaxAnalyzer.analyze();
+        br3.close();
+        bw3.close();
+
     }
 
     public static String getBaseName(String fileName) {
