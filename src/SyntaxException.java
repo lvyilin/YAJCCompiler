@@ -1,5 +1,5 @@
 public class SyntaxException extends Exception {
-    public SyntaxException(String message) {
-        super(message + "\n");
+    public SyntaxException(LexicalToken lexicalToken, int lineNumber) {
+        super(String.format("Line %d: ", lineNumber) + lexicalToken + System.lineSeparator());
     }
 }

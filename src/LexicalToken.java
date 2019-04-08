@@ -10,7 +10,7 @@ public class LexicalToken {
 
     @Override
     public String toString() {
-        return tokenId + "\t" + tokenString + System.lineSeparator();
+        return tokenId + "\t" + tokenString;
     }
 
     public void setTokenId(int tokenId) {

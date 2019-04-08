@@ -17,7 +17,7 @@ public class SyntaxAnalyzer {
         try {
             V_();
             token = nextToken();
-            if (token == null || !token.matches("=")) throw new SyntaxException(Integer.toString(lineNumber));
+            if (token == null || !token.matches("=")) throw new SyntaxException(token, lineNumber);
             E_();
         } catch (SyntaxException | NullPointerException e) {
             revertToken();
@@ -29,17 +29,17 @@ public class SyntaxAnalyzer {
 
     private void V_() throws IOException, SyntaxException {
         LexicalToken token = nextToken();
-        if (token == null || !token.isIdentifier()) throw new SyntaxException(Integer.toString(lineNumber));
+        if (token == null || !token.isIdentifier()) throw new SyntaxException(token, lineNumber);
     }
 
     private void F_() throws IOException, SyntaxException {
         LexicalToken token = null;
         try {
             token = nextToken();
-            if (token == null || !token.matches("(")) throw new SyntaxException(Integer.toString(lineNumber));
+            if (token == null || !token.matches("(")) throw new SyntaxException(token, lineNumber);
             E_();
             token = nextToken();
-            if (token == null || !token.matches(")")) throw new SyntaxException(Integer.toString(lineNumber));
+            if (token == null || !token.matches(")")) throw new SyntaxException(token, lineNumber);
         } catch (SyntaxException | NullPointerException e) {
             if (token == null || !token.isIdentifier()) throw e;
         }
@@ -79,7 +79,7 @@ public class SyntaxAnalyzer {
     private void M_() throws IOException, SyntaxException {
         LexicalToken token = nextToken();
         if (token == null || !token.matches("*") && !token.matches("/"))
-            throw new SyntaxException(Integer.toString(lineNumber));
+            throw new SyntaxException(token, lineNumber);
     }
 
 
@@ -87,7 +87,7 @@ public class SyntaxAnalyzer {
         try {
             A_();
             LexicalToken token = nextToken();
-            if (token != null) throw new SyntaxException(Integer.toString(lineNumber));
+            if (token != null) throw new SyntaxException(token, lineNumber);
             bw.write("Yes");
         } catch (SyntaxException se) {
             se.printStackTrace();
