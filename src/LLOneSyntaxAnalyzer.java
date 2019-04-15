@@ -8,8 +8,32 @@ public class LLOneSyntaxAnalyzer extends SyntaxAnalyzer {
     }
 
     @Override
+    public int getLineNumber() {
+        return 0;
+    }
+
+    @Override
+    public LexicalToken nextToken() {
+        return null;
+    }
+
+    @Override
+    public boolean hasNextToken() {
+        return false;
+    }
+
+    @Override
+    public void revertToken() {
+
+    }
+
+    @Override
+    public void revertToken(int newLineNumber) {
+
+    }
+
+    @Override
     public void analyze() throws IOException {
-        super.analyze();
         try {
             if (hasNextToken()) throw new SyntaxException(nextToken(), getLineNumber());
             writeResult("Yes" + System.lineSeparator());
