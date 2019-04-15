@@ -24,7 +24,7 @@ public class Compiler {
         BufferedWriter bw3 = new BufferedWriter(new OutputStreamWriter(System.out));
 //        BufferedWriter bw3 = new BufferedWriter(new FileWriter(syntaxFileName));
 
-        SyntaxAnalyzer syntaxAnalyzer = new SyntaxAnalyzer(br3, bw3);
+        SyntaxAnalyzer syntaxAnalyzer = new RecursiveSyntaxAnalyzer(br3, bw3);
         syntaxAnalyzer.analyze();
         br3.close();
         bw3.flush();
