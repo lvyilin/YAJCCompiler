@@ -1,7 +1,14 @@
 import java.io.*;
+import java.util.HashMap;
 
 public class Compiler {
-    public static void compile(String fileName) throws IOException {
+    private HashMap<Nonterminal, ProductionRule> productionRules = new HashMap<>();
+
+    public void defineProductionRule(Nonterminal nonterminal, ProductionRule productionRule) {
+        productionRules.put(nonterminal, productionRule);
+    }
+
+    public void compile(String fileName) throws IOException {
         String baseName = getBaseName(fileName);
         String preprocessedFileName = baseName + ".i";
         String lexicalFileName = baseName + ".lex";
@@ -31,7 +38,7 @@ public class Compiler {
 
     }
 
-    public static String getBaseName(String fileName) {
+    public String getBaseName(String fileName) {
         if (fileName == null) return null;
         int i = fileName.lastIndexOf('.');
         if (i != -1) {

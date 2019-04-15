@@ -169,8 +169,7 @@ public class RecursiveSyntaxAnalyzer extends SyntaxAnalyzer {
         super.analyze();
         try {
             Entrance();
-            LexicalToken token = nextToken();
-            if (token != null) throw new SyntaxException(token, getLineNumber());
+            if (hasNextToken()) throw new SyntaxException(nextToken(), getLineNumber());
             writeResult("Yes" + System.lineSeparator());
         } catch (SyntaxException se) {
             se.printStackTrace();
