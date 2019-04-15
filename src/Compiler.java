@@ -27,7 +27,7 @@ public class Compiler {
         SyntaxAnalyzer syntaxAnalyzer = new SyntaxAnalyzer(br3, bw3);
         syntaxAnalyzer.analyze();
         br3.close();
-        bw3.close();
+        bw3.flush();
 
     }
 

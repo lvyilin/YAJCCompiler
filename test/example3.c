@@ -1,1 +1,1 @@
-i=(j+i*k)/i*k
+abc=(j+i*k+l)/i
