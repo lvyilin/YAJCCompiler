@@ -3,6 +3,11 @@ import java.util.HashMap;
 
 public class Compiler {
     private HashMap<Nonterminal, ProductionRule> productionRules = new HashMap<>();
+    private Nonterminal startSymbol;
+
+    public void setStartSymbol(Nonterminal startSymbol) {
+        this.startSymbol = startSymbol;
+    }
 
     public void defineProductionRule(Nonterminal nonterminal, ProductionRule productionRule) {
         productionRules.put(nonterminal, productionRule);
@@ -28,10 +33,11 @@ public class Compiler {
         bw2.close();
 
         BufferedReader br3 = new BufferedReader(new FileReader(lexicalFileName));
-        BufferedWriter bw3 = new BufferedWriter(new OutputStreamWriter(System.out));
-//        BufferedWriter bw3 = new BufferedWriter(new FileWriter(syntaxFileName));
+//        BufferedWriter bw3 = new BufferedWriter(new OutputStreamWriter(System.out));
+        BufferedWriter bw3 = new BufferedWriter(new FileWriter(syntaxFileName));
 
-        SyntaxAnalyzer syntaxAnalyzer = new RecursiveSyntaxAnalyzer(br3, bw3);
+//        SyntaxAnalyzer syntaxAnalyzer = new RecursiveSyntaxAnalyzer(br3, bw3,startSymbol, productionRules);
+        SyntaxAnalyzer syntaxAnalyzer = new LLOneSyntaxAnalyzer(br3, bw3, startSymbol, productionRules);
         syntaxAnalyzer.analyze();
         br3.close();
         bw3.flush();

@@ -14,4 +14,15 @@ public class SymbolString {
     public boolean isEmptySymbolString() {
         return symbols.isEmpty();
     }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append('[');
+        for (Symbol symbol : symbols) {
+            stringBuilder.append(symbol);
+        }
+        stringBuilder.append(']');
+        return stringBuilder.toString();
+    }
 }

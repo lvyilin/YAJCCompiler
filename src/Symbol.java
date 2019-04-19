@@ -1,4 +1,8 @@
+import java.util.Objects;
+
 public class Symbol {
+
+
     private String symbol;
     private boolean isNonterminal;
     private boolean isIdentifer;
@@ -10,9 +14,12 @@ public class Symbol {
     public Symbol(String symbol, boolean isNonterminal) {
         this.symbol = symbol;
         this.isNonterminal = isNonterminal;
-        if (!isNonterminal && symbol == null) {
-            isIdentifer = true;
-        }
+    }
+
+    public Symbol(String symbol, boolean isNonterminal, boolean isIdentifer) {
+        this.symbol = symbol;
+        this.isNonterminal = isNonterminal;
+        this.isIdentifer = isIdentifer;
     }
 
     public String getSymbol() {
@@ -25,5 +32,36 @@ public class Symbol {
 
     public boolean isIdentifer() {
         return isIdentifer;
+    }
+
+    public boolean isEmptySymbol() {
+        return isNonterminal && !isIdentifer && symbol.equals("");
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Symbol symbol1 = (Symbol) o;
+        return isNonterminal == symbol1.isNonterminal &&
+                isIdentifer == symbol1.isIdentifer &&
+                Objects.equals(symbol, symbol1.symbol);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(symbol, isNonterminal, isIdentifer);
+    }
+
+    @Override
+    public String toString() {
+        if (isIdentifer) {
+            return "IDENTIFIER";
+        }
+        if (isEmptySymbol()) {
+            return "EMPTY";
+        }
+        return symbol;
     }
 }

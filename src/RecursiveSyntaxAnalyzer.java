@@ -1,15 +1,14 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class RecursiveSyntaxAnalyzer extends SyntaxAnalyzer {
-    private List<LexicalToken> tokens = new ArrayList<>();
     private int lineNumber = 0;
 
-    public RecursiveSyntaxAnalyzer(BufferedReader bufferedReader, BufferedWriter bufferedWriter) {
-        super(bufferedReader, bufferedWriter);
+    public RecursiveSyntaxAnalyzer(BufferedReader bufferedReader, BufferedWriter bufferedWriter,
+                                   Nonterminal startSymbol, HashMap<Nonterminal, ProductionRule> productionRules) {
+        super(bufferedReader, bufferedWriter, startSymbol, productionRules);
     }
 
     private void A() throws SyntaxException {
@@ -169,40 +168,30 @@ public class RecursiveSyntaxAnalyzer extends SyntaxAnalyzer {
         }
     }
 
-    @Override
     public int getLineNumber() {
         return lineNumber;
     }
 
-    @Override
     public LexicalToken nextToken() {
         if (!hasNextToken()) return null;
-        return tokens.get(lineNumber++);
+        return getLexicalTokens().get(lineNumber++);
     }
 
-    @Override
     public boolean hasNextToken() {
-        return lineNumber >= 0 & lineNumber < tokens.size();
+        return lineNumber >= 0 & lineNumber < getLexicalTokens().size();
     }
 
-    @Override
     public void revertToken() {
         --lineNumber;
     }
 
-    @Override
     public void revertToken(int newLineNumber) {
         lineNumber = newLineNumber;
     }
 
-    @Override
     public void analyze() throws IOException {
         try {
-            while (true) {
-                String line = getBufferedReader().readLine();
-                if (line == null) break;
-                tokens.add(LexicalToken.parseToken(line));
-            }
+            readAllLexicalTokens();
             Entrance();
             if (hasNextToken()) throw new SyntaxException(nextToken(), getLineNumber());
             writeResult("Yes" + System.lineSeparator());
@@ -211,4 +200,6 @@ public class RecursiveSyntaxAnalyzer extends SyntaxAnalyzer {
             writeResult("No" + System.lineSeparator());
         }
     }
+
+
 }
