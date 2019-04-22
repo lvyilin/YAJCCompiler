@@ -1,7 +1,8 @@
 public class Terminal extends Symbol {
-    public static final Terminal IDENTIFIER = new Terminal(null, false, true);
+    public static final Terminal IDENTIFIER = new Terminal(null, false, true, GrammarConsts.ID);
     public static final Terminal END = new Terminal("#", false);
     public static final Terminal EMPTY = new Terminal("", false);
+    private int tokenId;
 
     public Terminal(String s) {
         super(s, false);
@@ -11,15 +12,24 @@ public class Terminal extends Symbol {
         super(symbol, isNonterminal);
     }
 
-    private Terminal(String symbol, boolean isNonterminal, boolean isIdentifier) {
+    private Terminal(LexicalToken lexicalToken) {
+        super(lexicalToken.getTokenString());
+        tokenId = lexicalToken.getTokenId();
+    }
+
+//    private Terminal(String symbol, boolean isNonterminal, boolean isIdentifier) {
+//        super(symbol, isNonterminal, isIdentifier);
+//    }
+
+    private Terminal(String symbol, boolean isNonterminal, boolean isIdentifier, int tokenId) {
         super(symbol, isNonterminal, isIdentifier);
+        this.tokenId = tokenId;
     }
 
     public static Terminal of(LexicalToken lexicalToken) {
-        String symbol = lexicalToken.getTokenString();
         int tokenId = lexicalToken.getTokenId();
         if (tokenId == GrammarConsts.ID) return IDENTIFIER;
-        return new Terminal(symbol);
+        return new Terminal(lexicalToken);
     }
 
     @Override

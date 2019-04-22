@@ -197,11 +197,11 @@ public class LLOneSyntaxAnalyzer extends SyntaxAnalyzer {
 
     private void printFirstMap() {
         for (Map.Entry<Nonterminal, HashMap<SymbolString, HashSet<Terminal>>> entry : firstHashMap.entrySet()) {
-            System.out.println(entry.getKey());
+            System.err.println(entry.getKey());
             for (Map.Entry<SymbolString, HashSet<Terminal>> entry1 : entry.getValue().entrySet()) {
-                System.out.println("\t" + entry1.getKey());
+                System.err.println("\t" + entry1.getKey());
                 for (Terminal terminal : entry1.getValue()) {
-                    System.out.println("\t\t" + terminal);
+                    System.err.println("\t\t" + terminal);
                 }
             }
         }
@@ -209,18 +209,18 @@ public class LLOneSyntaxAnalyzer extends SyntaxAnalyzer {
 
     private void printFollowMap() {
         for (Map.Entry<Nonterminal, HashSet<Terminal>> entry : followHashMap.entrySet()) {
-            System.out.println(entry.getKey());
+            System.err.println(entry.getKey());
             for (Terminal terminal : entry.getValue()) {
-                System.out.println("\t" + terminal);
+                System.err.println("\t" + terminal);
             }
         }
     }
 
     private void printAnalyzeTable() {
         for (Map.Entry<Nonterminal, HashMap<Terminal, SymbolString>> entry : analyzeTable.entrySet()) {
-            System.out.println(entry.getKey());
+            System.err.println(entry.getKey());
             for (Map.Entry<Terminal, SymbolString> entry1 : entry.getValue().entrySet()) {
-                System.out.println("\t" + entry1.getKey() + ": " + entry1.getValue());
+                System.err.println("\t" + entry1.getKey() + ": " + entry1.getValue());
             }
         }
     }
@@ -249,11 +249,11 @@ public class LLOneSyntaxAnalyzer extends SyntaxAnalyzer {
             buildFollowSet();
             buildAnalyzeTable();
 
-            System.out.println("-----First set-----");
+            System.err.println("-----First set-----");
             printFirstMap();
-            System.out.println("-----Follow set-----");
+            System.err.println("-----Follow set-----");
             printFollowMap();
-            System.out.println("-----Analyze table set-----");
+            System.err.println("-----Analyze table set-----");
             printAnalyzeTable();
 
             initAnalyzeStack();

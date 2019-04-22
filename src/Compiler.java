@@ -4,10 +4,20 @@ import java.util.HashMap;
 public class Compiler {
     private HashMap<Nonterminal, ProductionRule> productionRules = new HashMap<>();
     private Nonterminal startSymbol;
+    private SyntaxAnalyzeEnum syntaxAnalyzerType = SyntaxAnalyzeEnum.RECURSIVE;
 
     public void setStartSymbol(Nonterminal startSymbol) {
         this.startSymbol = startSymbol;
     }
+
+    public void setSyntaxAnalyzerType(SyntaxAnalyzeEnum syntaxAnalyzerType) {
+        this.syntaxAnalyzerType = syntaxAnalyzerType;
+    }
+
+    public enum SyntaxAnalyzeEnum {
+        RECURSIVE, LL_ONE, OPERATOR_PRECEDENCE
+    }
+
 
     public void defineProductionRule(Nonterminal nonterminal, ProductionRule productionRule) {
         productionRules.put(nonterminal, productionRule);
@@ -37,7 +47,18 @@ public class Compiler {
         BufferedWriter bw3 = new BufferedWriter(new FileWriter(syntaxFileName));
 
 //        SyntaxAnalyzer syntaxAnalyzer = new RecursiveSyntaxAnalyzer(br3, bw3,startSymbol, productionRules);
-        SyntaxAnalyzer syntaxAnalyzer = new LLOneSyntaxAnalyzer(br3, bw3, startSymbol, productionRules);
+        SyntaxAnalyzer syntaxAnalyzer = null;
+        switch (syntaxAnalyzerType) {
+            case LL_ONE:
+                syntaxAnalyzer = new LLOneSyntaxAnalyzer(br3, bw3, startSymbol, productionRules);
+                break;
+            case RECURSIVE:
+                syntaxAnalyzer = new RecursiveSyntaxAnalyzer(br3, bw3, startSymbol, productionRules);
+                break;
+            case OPERATOR_PRECEDENCE:
+                syntaxAnalyzer = new OPGSyntaxAnalyzer(br3, bw3, startSymbol, productionRules);
+
+        }
         syntaxAnalyzer.analyze();
         br3.close();
         bw3.flush();
