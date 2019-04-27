@@ -1,10 +1,12 @@
 import java.io.*;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class Compiler {
     private HashMap<Nonterminal, ProductionRule> productionRules = new HashMap<>();
     private Nonterminal startSymbol;
     private SyntaxAnalyzeEnum syntaxAnalyzerType = SyntaxAnalyzeEnum.RECURSIVE;
+    private HashSet<Terminal> terminalHashSet = new HashSet<>();
 
     public void setStartSymbol(Nonterminal startSymbol) {
         this.startSymbol = startSymbol;
@@ -14,6 +16,11 @@ public class Compiler {
         this.syntaxAnalyzerType = syntaxAnalyzerType;
     }
 
+    public HashSet<Terminal> getTerminalHashSet() {
+        return terminalHashSet;
+    }
+
+
     public enum SyntaxAnalyzeEnum {
         RECURSIVE, LL_ONE, OPERATOR_PRECEDENCE
     }
@@ -21,6 +28,13 @@ public class Compiler {
 
     public void defineProductionRule(Nonterminal nonterminal, ProductionRule productionRule) {
         productionRules.put(nonterminal, productionRule);
+        for (SymbolString string : productionRule.getSymbolStrings()) {
+            for (Symbol symbol : string.getSymbols()) {
+                if (!symbol.isNonterminal()) {
+                    terminalHashSet.add((Terminal) symbol);
+                }
+            }
+        }
     }
 
     public void compile(String fileName) throws IOException {
@@ -56,7 +70,7 @@ public class Compiler {
                 syntaxAnalyzer = new RecursiveSyntaxAnalyzer(br3, bw3, startSymbol, productionRules);
                 break;
             case OPERATOR_PRECEDENCE:
-                syntaxAnalyzer = new OPGSyntaxAnalyzer(br3, bw3, startSymbol, productionRules);
+                syntaxAnalyzer = new OPGSyntaxAnalyzer(br3, bw3, startSymbol, productionRules, terminalHashSet);
 
         }
         syntaxAnalyzer.analyze();
