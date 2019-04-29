@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class OPGSyntaxAnalyzerTest {
 
-    private Compiler compiler = CompilerExample.compiler1;
+    private Compiler compiler = CompilerInstance.compiler3;
 
 
     @Test

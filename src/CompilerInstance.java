@@ -1,13 +1,15 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class CompilerExample {
+public class CompilerInstance {
     public static Compiler compiler1;// Textbook P132
     public static Compiler compiler2;// Ex 3
+    public static Compiler compiler3;// Ex 4
 
     static {
         initCompiler1();
         initCompiler2();
+        initCompiler3();
     }
 
     private static void initCompiler1() {
@@ -81,5 +83,32 @@ public class CompilerExample {
         compiler2.defineProductionRule(F, productionRule6);
         compiler2.defineProductionRule(M, productionRule7);
         compiler2.defineProductionRule(V, productionRule8);
+    }
+
+    private static void initCompiler3() {
+        compiler3 = new Compiler();
+        compiler3.setSyntaxAnalyzerType(Compiler.SyntaxAnalyzeEnum.OPERATOR_PRECEDENCE);
+        Nonterminal
+                E = new Nonterminal("E"),
+                T = new Nonterminal("T"),
+                F = new Nonterminal("F");
+
+        SymbolString symbolString1 = new SymbolString(new ArrayList<Symbol>(Arrays.asList(E, new Terminal("+"), T)));
+        SymbolString symbolString11 = new SymbolString(new ArrayList<Symbol>(Arrays.asList(E, new Terminal("-"), T)));
+        SymbolString symbolString2 = new SymbolString(new ArrayList<Symbol>(Arrays.asList(T)));
+        SymbolString symbolString3 = new SymbolString(new ArrayList<Symbol>(Arrays.asList(T, new Terminal("*"), F)));
+        SymbolString symbolString33 = new SymbolString(new ArrayList<Symbol>(Arrays.asList(T, new Terminal("/"), F)));
+        SymbolString symbolString4 = new SymbolString(new ArrayList<Symbol>(Arrays.asList(F)));
+        SymbolString symbolString5 = new SymbolString(new ArrayList<Symbol>(Arrays.asList(new Terminal("("), E, new Terminal(")"))));
+        SymbolString symbolString6 = new SymbolString(new ArrayList<Symbol>(Arrays.asList(Terminal.IDENTIFIER)));
+
+        ProductionRule productionRule0 = new ProductionRule(E, new ArrayList<>(Arrays.asList(symbolString1, symbolString11, symbolString2)));
+        ProductionRule productionRule1 = new ProductionRule(T, new ArrayList<>(Arrays.asList(symbolString3, symbolString33, symbolString4)));
+        ProductionRule productionRule2 = new ProductionRule(F, new ArrayList<>(Arrays.asList(symbolString5, symbolString6)));
+
+        compiler3.setStartSymbol(E);
+        compiler3.defineProductionRule(E, productionRule0);
+        compiler3.defineProductionRule(T, productionRule1);
+        compiler3.defineProductionRule(F, productionRule2);
     }
 }

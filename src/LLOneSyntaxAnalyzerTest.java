@@ -8,7 +8,7 @@ import java.nio.charset.Charset;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class LLOneSyntaxAnalyzerTest {
-    private Compiler compiler2 = CompilerExample.compiler2;
+    private Compiler compiler2 = CompilerInstance.compiler2;
 
 
     @Test
