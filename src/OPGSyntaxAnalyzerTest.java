@@ -47,4 +47,16 @@ class OPGSyntaxAnalyzerTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    void testCase4() {
+        String s = "test/example9.c";
+        try {
+            compiler.compile(s);
+            assertEquals("No" + System.lineSeparator(),
+                    FileUtils.readFileToString(new File("test/example9.syn"), Charset.defaultCharset()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

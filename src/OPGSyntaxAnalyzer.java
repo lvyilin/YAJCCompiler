@@ -189,11 +189,12 @@ public class OPGSyntaxAnalyzer extends SyntaxAnalyzer {
         map.put(terminal2, precedence);
     }
 
-    private int compare(Terminal t1, Terminal t2) {
+    private int compare(Terminal t1, Terminal t2) throws IllegalSyntaxException {
 //        return getStackPrecedence(t1) - getComparePrecedence(t2);
         Precedence precedence = getPrecedenceMatrixElement(t1, t2);
-        assert precedence != null;
-        assert precedence != Precedence.NA;
+        if (precedence == null || precedence == Precedence.NA) {
+            throw new IllegalSyntaxException();
+        }
         switch (precedence) {
             case GT:
                 return 1;
@@ -322,11 +323,9 @@ public class OPGSyntaxAnalyzer extends SyntaxAnalyzer {
 
             }
             writeResult("Yes" + System.lineSeparator());
-        } catch (SyntaxException se) {
+        } catch (SyntaxException | IllegalSyntaxException se) {
             se.printStackTrace();
             writeResult("No" + System.lineSeparator());
-        } catch (IllegalSyntaxException e) {
-            e.printStackTrace();
         }
     }
 }
