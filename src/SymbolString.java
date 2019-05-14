@@ -11,6 +11,10 @@ public class SymbolString {
         return symbols;
     }
 
+    public int length() {
+        return symbols.size();
+    }
+
     public boolean isEmptySymbolString() {
         return symbols.isEmpty();
     }

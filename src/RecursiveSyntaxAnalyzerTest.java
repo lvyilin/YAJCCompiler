@@ -23,7 +23,7 @@ class RecursiveSyntaxAnalyzerTest {
             compiler.compile(s);
             assertEquals("Yes" + System.lineSeparator(),
                     FileUtils.readFileToString(new File("test/example5.syn"), Charset.defaultCharset()));
-        } catch (IOException e) {
+        } catch (IOException | IllegalSyntaxException e) {
             e.printStackTrace();
         }
     }
@@ -35,7 +35,7 @@ class RecursiveSyntaxAnalyzerTest {
             compiler.compile(s);
             assertEquals("No" + System.lineSeparator(),
                     FileUtils.readFileToString(new File("test/example6.syn"), Charset.defaultCharset()));
-        } catch (IOException e) {
+        } catch (IOException | IllegalSyntaxException e) {
             e.printStackTrace();
         }
     }

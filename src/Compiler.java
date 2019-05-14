@@ -7,6 +7,7 @@ public class Compiler {
     private Nonterminal startSymbol;
     private SyntaxAnalyzeEnum syntaxAnalyzerType = SyntaxAnalyzeEnum.RECURSIVE;
     private HashSet<Terminal> terminalHashSet = new HashSet<>();
+    private HashSet<Nonterminal> nonterminalHashSet = new HashSet<>();
 
     public void setStartSymbol(Nonterminal startSymbol) {
         this.startSymbol = startSymbol;
@@ -22,7 +23,7 @@ public class Compiler {
 
 
     public enum SyntaxAnalyzeEnum {
-        RECURSIVE, LL_ONE, OPERATOR_PRECEDENCE
+        RECURSIVE, LL_ONE, OPERATOR_PRECEDENCE, SLR_ONE
     }
 
 
@@ -32,12 +33,14 @@ public class Compiler {
             for (Symbol symbol : string.getSymbols()) {
                 if (!symbol.isNonterminal()) {
                     terminalHashSet.add((Terminal) symbol);
+                } else {
+                    nonterminalHashSet.add((Nonterminal) symbol);
                 }
             }
         }
     }
 
-    public void compile(String fileName) throws IOException {
+    public void compile(String fileName) throws IOException, IllegalSyntaxException {
         String baseName = getBaseName(fileName);
         String preprocessedFileName = baseName + ".i";
         String lexicalFileName = baseName + ".lex";
@@ -71,6 +74,9 @@ public class Compiler {
                 break;
             case OPERATOR_PRECEDENCE:
                 syntaxAnalyzer = new OPGSyntaxAnalyzer(br3, bw3, startSymbol, productionRules, terminalHashSet);
+                break;
+            case SLR_ONE:
+                syntaxAnalyzer = new SLROneSyntaxAnalyzer(br3, bw3, startSymbol, productionRules, terminalHashSet, nonterminalHashSet);
 
         }
         syntaxAnalyzer.analyze();

@@ -19,7 +19,7 @@ class OPGSyntaxAnalyzerTest {
             compiler.compile(s);
             assertEquals("Yes" + System.lineSeparator(),
                     FileUtils.readFileToString(new File("test/example7.syn"), Charset.defaultCharset()));
-        } catch (IOException e) {
+        } catch (IOException | IllegalSyntaxException e) {
             e.printStackTrace();
         }
     }
@@ -31,7 +31,7 @@ class OPGSyntaxAnalyzerTest {
             compiler.compile(s);
             assertEquals("Yes" + System.lineSeparator(),
                     FileUtils.readFileToString(new File("test/example0.syn"), Charset.defaultCharset()));
-        } catch (IOException e) {
+        } catch (IOException | IllegalSyntaxException e) {
             e.printStackTrace();
         }
     }
@@ -43,7 +43,7 @@ class OPGSyntaxAnalyzerTest {
             compiler.compile(s);
             assertEquals("No" + System.lineSeparator(),
                     FileUtils.readFileToString(new File("test/example8.syn"), Charset.defaultCharset()));
-        } catch (IOException e) {
+        } catch (IOException | IllegalSyntaxException e) {
             e.printStackTrace();
         }
     }
@@ -55,7 +55,7 @@ class OPGSyntaxAnalyzerTest {
             compiler.compile(s);
             assertEquals("No" + System.lineSeparator(),
                     FileUtils.readFileToString(new File("test/example9.syn"), Charset.defaultCharset()));
-        } catch (IOException e) {
+        } catch (IOException | IllegalSyntaxException e) {
             e.printStackTrace();
         }
     }
