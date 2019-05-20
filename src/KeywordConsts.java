@@ -1,28 +1,36 @@
-import java.util.HashMap;
-import java.util.Map;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+
 
 public class KeywordConsts {
-    private static final Map<String, Integer> keywords = new HashMap<String, Integer>() {{
-        put("void", GrammarConsts.VOID);
-        put("int", GrammarConsts.INTEGER);
-        put("float", GrammarConsts.FLOAT);
-        put("double", GrammarConsts.DOUBLE);
-        put("char", GrammarConsts.CHAR);
-        put("struct", GrammarConsts.STRUCT);
+    private static final BiMap<String, Integer> keywords;
 
-        put("if", GrammarConsts.IF);
-        put("else", GrammarConsts.ELSE);
-        put("for", GrammarConsts.FOR);
-        put("do", GrammarConsts.DO);
-        put("while", GrammarConsts.WHILE);
-        put("return", GrammarConsts.RETURN);
-    }};
+    static {
+        keywords = HashBiMap.create();
+        keywords.put("void", GrammarConsts.VOID);
+        keywords.put("int", GrammarConsts.INTEGER);
+        keywords.put("float", GrammarConsts.FLOAT);
+        keywords.put("double", GrammarConsts.DOUBLE);
+        keywords.put("char", GrammarConsts.CHAR);
+        keywords.put("struct", GrammarConsts.STRUCT);
+        keywords.put("if", GrammarConsts.IF);
+        keywords.put("else", GrammarConsts.ELSE);
+        keywords.put("for", GrammarConsts.FOR);
+        keywords.put("do", GrammarConsts.DO);
+        keywords.put("while", GrammarConsts.WHILE);
+        keywords.put("return", GrammarConsts.RETURN);
+
+    }
 
     public static boolean isKeyword(String k) {
         return keywords.containsKey(k);
     }
 
-    public static int getKeywordId(String k) {
+    public static Integer getKeywordId(String k) {
         return keywords.get(k);
+    }
+
+    public static String getKeywordString(int val) {
+        return keywords.inverse().get(val);
     }
 }

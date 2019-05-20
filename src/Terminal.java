@@ -2,24 +2,23 @@ public class Terminal extends Symbol {
     public static final Terminal IDENTIFIER = new Terminal(null, false, true, GrammarConsts.ID);
     public static final Terminal END = new Terminal("#", false);
     public static final Terminal EMPTY = new Terminal("", false);
-    private int tokenId;
+    private final Integer tokenId;
+
 
     public Terminal(String s) {
         super(s, false);
+        this.tokenId = GrammarConsts.getGrammarConst(s);
     }
 
-    private Terminal(String symbol, boolean isNonterminal) {
-        super(symbol, isNonterminal);
+    private Terminal(String s, boolean isNonterminal) {
+        super(s, isNonterminal);
+        this.tokenId = GrammarConsts.getGrammarConst(s);
     }
 
     private Terminal(LexicalToken lexicalToken) {
         super(lexicalToken.getTokenString());
         tokenId = lexicalToken.getTokenId();
     }
-
-//    private Terminal(String symbol, boolean isNonterminal, boolean isIdentifier) {
-//        super(symbol, isNonterminal, isIdentifier);
-//    }
 
     private Terminal(String symbol, boolean isNonterminal, boolean isIdentifier, int tokenId) {
         super(symbol, isNonterminal, isIdentifier);
@@ -44,4 +43,9 @@ public class Terminal extends Symbol {
     public boolean isEndSymbol() {
         return super.getSymbol() != null && super.getSymbol().equals("#");
     }
+
+    public int getTokenId() {
+        return tokenId;
+    }
+
 }

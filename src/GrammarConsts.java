@@ -58,4 +58,19 @@ public class GrammarConsts {
     public static final int DO = 64;
     public static final int WHILE = 65;
     public static final int RETURN = 66;
+
+    public static Integer getGrammarConst(String s) {
+        Integer ret;
+        if (s.length() == 1) {
+            char ch = s.charAt(0);
+            ret = SeparatorConsts.getSeparatorId(ch);
+            if (ret != null) return ret;
+            ret = BracketConsts.getBracketId(ch);
+            if (ret != null) return ret;
+        }
+        ret = KeywordConsts.getKeywordId(s);
+        if (ret != null) return ret;
+        ret = OperatorConsts.getOperatorId(s);
+        return ret;
+    }
 }
