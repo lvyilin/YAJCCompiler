@@ -265,7 +265,7 @@ public class LLOneSyntaxAnalyzer extends SyntaxAnalyzer {
                 if (!symbol.isNonterminal()) {
                     Terminal terminal = (Terminal) symbol;
                     if (terminal.isEndSymbol()) throw new SyntaxException(lexicalToken, lineNumber);
-                    if (!terminal.isIdentifer() && !terminal.getSymbol().equals(lexicalToken.getTokenString())) {
+                    if (!terminal.isIdentifier() && !terminal.getSymbol().equals(lexicalToken.getTokenString())) {
                         throw new SyntaxException(lexicalToken, lineNumber);
                     }
                     analyzeStack.pop();

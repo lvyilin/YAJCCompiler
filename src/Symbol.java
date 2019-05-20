@@ -5,7 +5,7 @@ public class Symbol {
 
     private String symbol;
     private boolean isNonterminal;
-    private boolean isIdentifer;
+    private boolean isIdentifier;
 
     public Symbol(String symbol) {
         this.symbol = symbol;
@@ -19,7 +19,7 @@ public class Symbol {
     public Symbol(String symbol, boolean isNonterminal, boolean isIdentifer) {
         this.symbol = symbol;
         this.isNonterminal = isNonterminal;
-        this.isIdentifer = isIdentifer;
+        this.isIdentifier = isIdentifer;
     }
 
     public String getSymbol() {
@@ -30,12 +30,12 @@ public class Symbol {
         return isNonterminal;
     }
 
-    public boolean isIdentifer() {
-        return isIdentifer;
+    public boolean isIdentifier() {
+        return isIdentifier;
     }
 
     public boolean isEmptySymbol() {
-        return isNonterminal && !isIdentifer && symbol.equals("");
+        return isNonterminal && !isIdentifier && symbol.equals("");
     }
 
 
@@ -45,18 +45,18 @@ public class Symbol {
         if (o == null || getClass() != o.getClass()) return false;
         Symbol symbol1 = (Symbol) o;
         return isNonterminal == symbol1.isNonterminal &&
-                isIdentifer == symbol1.isIdentifer &&
+                isIdentifier == symbol1.isIdentifier &&
                 Objects.equals(symbol, symbol1.symbol);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(symbol, isNonterminal, isIdentifer);
+        return Objects.hash(symbol, isNonterminal, isIdentifier);
     }
 
     @Override
     public String toString() {
-        if (isIdentifer) {
+        if (isIdentifier) {
             return "IDENTIFIER";
         }
         if (isEmptySymbol()) {

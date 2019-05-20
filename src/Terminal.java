@@ -33,8 +33,8 @@ public class Terminal extends Symbol {
     }
 
     @Override
-    public boolean isIdentifer() {
-        return super.isIdentifer();
+    public boolean isIdentifier() {
+        return super.isIdentifier();
     }
 
     public boolean isEmptySymbol() {
