@@ -1,8 +1,6 @@
 import java.util.Objects;
 
-public class Symbol {
-
-
+public abstract class Symbol {
     private String symbol;
     private boolean isNonterminal;
     private boolean isIdentifier;
@@ -16,10 +14,10 @@ public class Symbol {
         this.isNonterminal = isNonterminal;
     }
 
-    public Symbol(String symbol, boolean isNonterminal, boolean isIdentifer) {
+    public Symbol(String symbol, boolean isNonterminal, boolean isIdentifier) {
         this.symbol = symbol;
         this.isNonterminal = isNonterminal;
-        this.isIdentifier = isIdentifer;
+        this.isIdentifier = isIdentifier;
     }
 
     public String getSymbol() {
