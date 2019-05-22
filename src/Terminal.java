@@ -1,8 +1,11 @@
+import java.util.Objects;
+
 public class Terminal extends Symbol {
-    public static final Terminal IDENTIFIER = new Terminal(null, false, true, GrammarConsts.ID);
-    public static final Terminal END = new Terminal("#", false);
-    public static final Terminal EMPTY = new Terminal("", false);
-    private final Integer tokenId;
+    public static final Terminal IDENTIFIER = new Terminal(null, true, GrammarConsts.ID);
+    public static final Terminal END = new Terminal("#");
+    public static final Terminal EMPTY = new Terminal("");
+    private Integer tokenId;
+    private String tokenString;
 
 
     public Terminal(String s) {
@@ -10,25 +13,27 @@ public class Terminal extends Symbol {
         this.tokenId = GrammarConsts.getGrammarConst(s);
     }
 
-    private Terminal(String s, boolean isNonterminal) {
-        super(s, isNonterminal);
-        this.tokenId = GrammarConsts.getGrammarConst(s);
-    }
-
-    private Terminal(LexicalToken lexicalToken) {
-        super(lexicalToken.getTokenString());
-        tokenId = lexicalToken.getTokenId();
-    }
-
-    private Terminal(String symbol, boolean isNonterminal, boolean isIdentifier, int tokenId) {
-        super(symbol, isNonterminal, isIdentifier);
+    public Terminal(String symbol, boolean isIdentifier, int tokenId) {
+        super(symbol, false, isIdentifier);
         this.tokenId = tokenId;
+    }
+
+    public Terminal(Terminal t) {
+        super(t.getSymbol(), false, true);
+        tokenId = t.tokenId;
     }
 
     public static Terminal of(LexicalToken lexicalToken) {
         int tokenId = lexicalToken.getTokenId();
-        if (tokenId == GrammarConsts.ID) return IDENTIFIER;
-        return new Terminal(lexicalToken);
+        Terminal t;
+        if (tokenId == GrammarConsts.ID) {
+            t = new Terminal(null, true, GrammarConsts.ID);
+            t.setTokenString(lexicalToken.getTokenString());
+        } else {
+            t = new Terminal(lexicalToken.getTokenString());
+            t.tokenId = lexicalToken.getTokenId();
+        }
+        return t;
     }
 
     @Override
@@ -44,8 +49,35 @@ public class Terminal extends Symbol {
         return super.getSymbol() != null && super.getSymbol().equals("#");
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Terminal terminal = (Terminal) o;
+        return Objects.equals(tokenId, terminal.tokenId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), tokenId);
+    }
+
     public int getTokenId() {
         return tokenId;
     }
+
+    public String getTokenString() {
+        return tokenString;
+    }
+
+    public void setTokenString(String tokenString) {
+        this.tokenString = tokenString;
+    }
+
+    public void setTokenId(Integer tokenId) {
+        this.tokenId = tokenId;
+    }
+
 
 }

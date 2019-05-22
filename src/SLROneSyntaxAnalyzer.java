@@ -7,10 +7,12 @@ public class SLROneSyntaxAnalyzer extends SyntaxAnalyzer {
     private class SLROneProject {
         Nonterminal nonterminal;
         SymbolString symbolString;
+        SemanticAction semanticAction;
 
         SLROneProject(Nonterminal nonterminal, SymbolString symbolString) {
             this.nonterminal = nonterminal;
             this.symbolString = symbolString;
+            this.semanticAction = SemanticActionMatcher.matches(nonterminal, symbolString);
         }
     }
 
@@ -444,8 +446,10 @@ public class SLROneSyntaxAnalyzer extends SyntaxAnalyzer {
     private HashMap<Nonterminal, HashMap<SymbolString, HashSet<Terminal>>> firstHashMap = new HashMap<>();
     private HashMap<Nonterminal, HashSet<Terminal>> followHashMap = new HashMap<>();
     private static final Integer ACC = Integer.MAX_VALUE;
-    private Stack<Symbol> analyzeStack = new Stack<>();
     private Stack<Integer> stateStack = new Stack<>();
+    private Stack<Symbol> analyzeStack = new Stack<>();
+    private HashMap<Symbol, SymbolInfo> symbolMap = new HashMap<>();
+    private LinkedList<Symbol> handler = new LinkedList<>();
 
     @Override
     public void analyze() throws IOException {
@@ -465,9 +469,10 @@ public class SLROneSyntaxAnalyzer extends SyntaxAnalyzer {
             int lineNumber = 0;
             try {
                 while (lineNumber <= lexicalTokens.size()) {
+//                while (!stateStack.peek().equals(ACC)) {
                     Integer state = stateStack.peek();
                     Terminal terminal;
-                    if (lineNumber != lexicalTokens.size()) {
+                    if (lineNumber < lexicalTokens.size()) {
                         LexicalToken lexicalToken = lexicalTokens.get(lineNumber);
 
                         terminal = Terminal.of(lexicalToken);
@@ -483,22 +488,39 @@ public class SLROneSyntaxAnalyzer extends SyntaxAnalyzer {
                         action = -action - 1;
                         SLROneProject project = slrOneProjects.getProject(action);
                         int len = project.symbolString.length();
+                        handler.clear();
                         while (len-- > 0) {
                             stateStack.pop();
-                            analyzeStack.pop();
+                            handler.addFirst(analyzeStack.pop());
                         }
                         analyzeStack.push(project.nonterminal);
+                        SemanticToken token = project.semanticAction.execute(analyzeStack, handler, project.nonterminal, symbolMap);
+                        if (token != null) {
+                            writeResult(token + " | " + SemanticToken.annotate(token, symbolMap) + System.lineSeparator());
+                        }
                         Integer nextState = analyzeTable.get(stateStack.peek()).get(project.nonterminal);
                         stateStack.push(nextState);
                     }
                 }
-                if (!stateStack.peek().equals(ACC)) {
+                if (stateStack.peek().equals(ACC)) {
+                    assert analyzeStack.pop().equals(Terminal.END);
+                    SLROneProject project = slrOneProjects.getProject(startProjectIndex.projectNumber);
+                    int len = project.symbolString.length();
+                    handler.clear();
+                    while (len-- > 0) {
+                        handler.addFirst(analyzeStack.pop());
+                    }
+                    SemanticToken token = project.semanticAction.execute(analyzeStack, handler, project.nonterminal, symbolMap);
+                    if (token != null) {
+                        writeResult(token + " | " + SemanticToken.annotate(token, symbolMap) + System.lineSeparator());
+                    }
+                } else {
                     throw new SyntaxException(lexicalTokens.get(lexicalTokens.size() - 1), lexicalTokens.size());
                 }
             } catch (NullPointerException ne) {
                 throw new SyntaxException(lexicalTokens.get(lineNumber), lineNumber + 1);
             }
-            writeResult("Yes" + System.lineSeparator());
+//            writeResult("Yes" + System.lineSeparator());
         } catch (NullPointerException | SyntaxException | IllegalSyntaxException se) {
             se.printStackTrace();
             writeResult("No" + System.lineSeparator());

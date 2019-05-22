@@ -45,4 +45,16 @@ class SLROneSyntaxAnalyzerTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    void testCase4() {
+        String s = "test/example11.c";
+        try {
+            compiler.compile(s);
+            assertEquals("Yes" + System.lineSeparator(),
+                    FileUtils.readFileToString(new File("test/example11.syn"), Charset.defaultCharset()));
+        } catch (IOException | IllegalSyntaxException e) {
+            e.printStackTrace();
+        }
+    }
 }
