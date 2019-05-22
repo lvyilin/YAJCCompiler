@@ -5,6 +5,8 @@ public abstract class Symbol {
     private boolean isNonterminal;
     private boolean isIdentifier;
 
+    private String tokenString;
+
     public Symbol(String symbol) {
         this.symbol = symbol;
     }
@@ -19,6 +21,14 @@ public abstract class Symbol {
         this.isNonterminal = isNonterminal;
         this.isIdentifier = isIdentifier;
     }
+
+    public Symbol(String symbol, boolean isNonterminal, boolean isIdentifier, String tokenString) {
+        this.symbol = symbol;
+        this.isNonterminal = isNonterminal;
+        this.isIdentifier = isIdentifier;
+        this.tokenString = tokenString;
+    }
+
 
     public String getSymbol() {
         return symbol;
@@ -47,6 +57,12 @@ public abstract class Symbol {
                 Objects.equals(symbol, symbol1.symbol);
     }
 
+    public static boolean equalSymbol(Symbol a, Symbol b) {
+        return a.isNonterminal == b.isNonterminal &&
+                a.isIdentifier == b.isIdentifier &&
+                Objects.equals(a.symbol, b.symbol);
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(symbol, isNonterminal, isIdentifier);
@@ -62,4 +78,13 @@ public abstract class Symbol {
         }
         return symbol;
     }
+
+    public String getTokenString() {
+        return tokenString;
+    }
+
+    public void setTokenString(String tokenString) {
+        this.tokenString = tokenString;
+    }
+
 }

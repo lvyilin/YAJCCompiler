@@ -1,29 +1,32 @@
 import java.util.Objects;
 
-public class Variable extends Terminal {
+public class Variable extends Symbol {
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Variable variable = (Variable) o;
-        return tokenString.equals(variable.tokenString);
+        return super.getTokenString().equals(variable.getTokenString());
     }
 
     @Override
     public String toString() {
-        return tokenString;
+        return getTokenString();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), tokenString);
+        return Objects.hash(super.hashCode(), getTokenString());
     }
 
-    private String tokenString;
 
-    public Variable(Terminal terminal) {
-        super(terminal.getSymbol(), true, terminal.getTokenId());
-        this.tokenString = terminal.getTokenString();
+    public Variable(Symbol symbol) {
+        super(symbol.getSymbol(), symbol.isNonterminal(), symbol.isIdentifier(), symbol.getTokenString());
+    }
+
+    public Variable(Symbol symbol, String tokenString) {
+        super(symbol.getSymbol(), symbol.isNonterminal(), symbol.isIdentifier(), tokenString);
     }
 }

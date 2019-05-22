@@ -5,7 +5,6 @@ public class Terminal extends Symbol {
     public static final Terminal END = new Terminal("#");
     public static final Terminal EMPTY = new Terminal("");
     private Integer tokenId;
-    private String tokenString;
 
 
     public Terminal(String s) {
@@ -65,14 +64,6 @@ public class Terminal extends Symbol {
 
     public int getTokenId() {
         return tokenId;
-    }
-
-    public String getTokenString() {
-        return tokenString;
-    }
-
-    public void setTokenString(String tokenString) {
-        this.tokenString = tokenString;
     }
 
     public void setTokenId(Integer tokenId) {

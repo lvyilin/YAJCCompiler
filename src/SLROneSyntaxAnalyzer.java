@@ -493,10 +493,9 @@ public class SLROneSyntaxAnalyzer extends SyntaxAnalyzer {
                             stateStack.pop();
                             handler.addFirst(analyzeStack.pop());
                         }
-                        analyzeStack.push(project.nonterminal);
                         SemanticToken token = project.semanticAction.execute(analyzeStack, handler, project.nonterminal, symbolMap);
                         if (token != null) {
-                            writeResult(token + " | " + SemanticToken.annotate(token, symbolMap) + System.lineSeparator());
+                            writeResult(token + System.lineSeparator());
                         }
                         Integer nextState = analyzeTable.get(stateStack.peek()).get(project.nonterminal);
                         stateStack.push(nextState);
@@ -512,7 +511,7 @@ public class SLROneSyntaxAnalyzer extends SyntaxAnalyzer {
                     }
                     SemanticToken token = project.semanticAction.execute(analyzeStack, handler, project.nonterminal, symbolMap);
                     if (token != null) {
-                        writeResult(token + " | " + SemanticToken.annotate(token, symbolMap) + System.lineSeparator());
+                        writeResult(token + System.lineSeparator());
                     }
                 } else {
                     throw new SyntaxException(lexicalTokens.get(lexicalTokens.size() - 1), lexicalTokens.size());

@@ -1,15 +1,13 @@
 public class SymbolInfo {
-    public int getPlace() {
-        return place;
+    private int type;
+    private String name;
+
+    public SymbolInfo(Symbol symbol) {
+        this.name = symbol.getTokenString();
     }
 
-    public void setPlace(int place) {
-        this.place = place;
-    }
-
-    private int place;
-
-    public SymbolInfo(int place) {
-        this.place = place;
+    @Override
+    public String toString() {
+        return name;
     }
 }
