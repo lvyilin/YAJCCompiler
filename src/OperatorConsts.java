@@ -43,4 +43,8 @@ public class OperatorConsts {
     public static Integer getOperatorId(String k) {
         return operators.get(k);
     }
+
+    public static String getOperatorString(Integer i) {
+        return operators.inverse().get(i);
+    }
 }

@@ -1,1 +1,1 @@
-abc=(i)*(j)+k-i)+n
+abc=(i)*(j)+k-i+n
