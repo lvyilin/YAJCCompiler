@@ -12,6 +12,8 @@ class SLROneSyntaxAnalyzerTest {
 
     @Test
     void testCase1() {
+        compiler = CompilerInstance.compiler5;
+
         String s = "test/example3.c";
         try {
             compiler.compile(s);
@@ -28,6 +30,8 @@ class SLROneSyntaxAnalyzerTest {
 
     @Test
     void testCase2() {
+        compiler = CompilerInstance.compiler5;
+
         String s = "test/example4.c";
         try {
             compiler.compile(s);
@@ -42,6 +46,8 @@ class SLROneSyntaxAnalyzerTest {
 
     @Test
     void testCase3() {
+        compiler = CompilerInstance.compiler5;
+
         String s = "test/example10.c";
         try {
             compiler.compile(s);
@@ -58,6 +64,8 @@ class SLROneSyntaxAnalyzerTest {
 
     @Test
     void testCase4() {
+        compiler = CompilerInstance.compiler5;
+
         String s = "test/example11.c";
         try {
             compiler.compile(s);
@@ -65,6 +73,20 @@ class SLROneSyntaxAnalyzerTest {
                             "+\tB\t__TMP11__\t__TMP12__\r\n" +
                             "=\t__TMP12__\tnull\tX\r\n",
                     FileUtils.readFileToString(new File("test/example11.syn"), Charset.defaultCharset()));
+        } catch (IOException | IllegalSyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void testCase5() {
+        compiler = CompilerInstance.compiler6;
+
+        String s = "test/example12.c";
+        try {
+            compiler.compile(s);
+            assertEquals("Yes",
+                    FileUtils.readFileToString(new File("test/example12.syn"), Charset.defaultCharset()));
         } catch (IOException | IllegalSyntaxException e) {
             e.printStackTrace();
         }
