@@ -450,7 +450,7 @@ public class SLROneSyntaxAnalyzer extends SyntaxAnalyzer {
     private Stack<Symbol> analyzeStack = new Stack<>();
     private HashMap<Symbol, SymbolInfo> symbolMap = new HashMap<>();
     private LinkedList<Symbol> handler = new LinkedList<>();
-
+    private List<SemanticToken> semanticTokens = getSemanticTokens();
     @Override
     public void analyze() throws IOException {
         try {
@@ -493,10 +493,7 @@ public class SLROneSyntaxAnalyzer extends SyntaxAnalyzer {
                             stateStack.pop();
                             handler.addFirst(analyzeStack.pop());
                         }
-                        SemanticToken token = project.semanticAction.execute(analyzeStack, handler, project.nonterminal, symbolMap);
-                        if (token != null) {
-                            writeResult(token + System.lineSeparator());
-                        }
+                        project.semanticAction.execute(analyzeStack, handler, project.nonterminal, symbolMap, semanticTokens);
                         Integer nextState = analyzeTable.get(stateStack.peek()).get(project.nonterminal);
                         stateStack.push(nextState);
                     }
@@ -509,10 +506,9 @@ public class SLROneSyntaxAnalyzer extends SyntaxAnalyzer {
                     while (len-- > 0) {
                         handler.addFirst(analyzeStack.pop());
                     }
-                    SemanticToken token = project.semanticAction.execute(analyzeStack, handler, project.nonterminal, symbolMap);
-                    if (token != null) {
-                        writeResult(token + System.lineSeparator());
-                    }
+                    project.semanticAction.execute(analyzeStack, handler, project.nonterminal, symbolMap, semanticTokens);
+
+                    writeAllSemanticTokens();
                 } else {
                     throw new SyntaxException(lexicalTokens.get(lexicalTokens.size() - 1), lexicalTokens.size());
                 }

@@ -19,6 +19,11 @@ public class BracketConsts {
         return brackets.containsKey(k);
     }
 
+    public static boolean isBracket(int i) {
+        return brackets.inverse().containsKey(i);
+    }
+
+
     public static Integer getBracketId(char k) {
         return brackets.get(k);
     }

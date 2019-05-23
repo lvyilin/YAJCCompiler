@@ -25,7 +25,7 @@ public class Terminal extends Symbol {
     public static Terminal of(LexicalToken lexicalToken) {
         int tokenId = lexicalToken.getTokenId();
         Terminal t;
-        if (tokenId == GrammarConsts.ID) {
+        if (tokenId == GrammarConsts.ID || tokenId == GrammarConsts.INT || tokenId == GrammarConsts.DECIMAL) {
             t = new Terminal(null, true, GrammarConsts.ID);
             t.setTokenString(lexicalToken.getTokenString());
         } else {

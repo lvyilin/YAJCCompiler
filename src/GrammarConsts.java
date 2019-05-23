@@ -58,6 +58,7 @@ public class GrammarConsts {
     public static final int DO = 64;
     public static final int WHILE = 65;
     public static final int RETURN = 66;
+    public static final int GOTO = 67;
 
     public static Integer getGrammarConst(String s) {
         Integer ret;

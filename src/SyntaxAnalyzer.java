@@ -9,6 +9,7 @@ public abstract class SyntaxAnalyzer {
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
     private List<LexicalToken> lexicalTokens = new ArrayList<>();
+    private List<SemanticToken> semanticTokens = new ArrayList<>();
 
     public HashMap<Nonterminal, ProductionRule> getProductionRules() {
         return productionRules;
@@ -45,7 +46,6 @@ public abstract class SyntaxAnalyzer {
 
     public abstract void analyze() throws IOException;
 
-
     public void writeResult(String s) throws IOException {
         bufferedWriter.write(s);
         bufferedWriter.flush();
@@ -57,5 +57,18 @@ public abstract class SyntaxAnalyzer {
             if (line == null) break;
             lexicalTokens.add(LexicalToken.parseToken(line));
         }
+    }
+
+    public List<SemanticToken> getSemanticTokens() {
+        return semanticTokens;
+    }
+
+    public void writeAllSemanticTokens() throws IOException {
+        StringBuilder sb = new StringBuilder();
+        for (SemanticToken st : semanticTokens) {
+            sb.append(st);
+            sb.append(System.lineSeparator());
+        }
+        writeResult(sb.toString());
     }
 }

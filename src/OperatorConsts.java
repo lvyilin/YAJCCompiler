@@ -34,6 +34,7 @@ public class OperatorConsts {
         operators.put("*=", GrammarConsts.MULTIPLEA);
         operators.put("/=", GrammarConsts.DIVIDEA);
         operators.put("%=", GrammarConsts.MODA);
+        operators.put("jmp", GrammarConsts.GOTO);
     }
 
     public static boolean isOperator(String k) {
@@ -46,5 +47,33 @@ public class OperatorConsts {
 
     public static String getOperatorString(Integer i) {
         return operators.inverse().get(i);
+    }
+
+    public static boolean isCompareOperator(Integer i) {
+        switch (i) {
+            case GrammarConsts.LT:
+            case GrammarConsts.LE:
+            case GrammarConsts.GT:
+            case GrammarConsts.GE:
+            case GrammarConsts.EQ:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public static boolean isBiOperator(Integer i) {
+        switch (i) {
+            case GrammarConsts.PLUS:
+            case GrammarConsts.SUBTRACT:
+            case GrammarConsts.MULTIPLE:
+            case GrammarConsts.DIVIDE:
+            case GrammarConsts.MOD:
+            case GrammarConsts.LSHIFT:
+            case GrammarConsts.RSHIFT:
+                return true;
+            default:
+                return false;
+        }
     }
 }

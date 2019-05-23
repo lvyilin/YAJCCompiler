@@ -19,6 +19,7 @@ public class KeywordConsts {
         keywords.put("do", GrammarConsts.DO);
         keywords.put("while", GrammarConsts.WHILE);
         keywords.put("return", GrammarConsts.RETURN);
+        keywords.put("goto", GrammarConsts.GOTO);
 
     }
 

@@ -191,6 +191,7 @@ public class CompilerInstance {
                 Entrance_ = new Nonterminal("Entrance_"),
                 Stmt = new Nonterminal("Stmt"),
                 If = new Nonterminal("If"),
+                Else = new Nonterminal("Else"),
                 Condition = new Nonterminal("Condition"),
                 Clause = new Nonterminal("Clause");
 
@@ -207,7 +208,8 @@ public class CompilerInstance {
         SymbolString symbolString77 = new SymbolString(new ArrayList<Symbol>(Arrays.asList(Stmt)));
         SymbolString symbolString8 = new SymbolString(new ArrayList<>(Arrays.asList(A, new Terminal(";"))));
         SymbolString symbolString9 = new SymbolString(new ArrayList<>(Arrays.asList(If)));
-        SymbolString symbolString10 = new SymbolString(new ArrayList<>(Arrays.asList(new Terminal("if"), new Terminal("("), Condition, new Terminal(")"), Clause)));
+        SymbolString symbolString10 = new SymbolString(new ArrayList<>(Arrays.asList(new Terminal("if"), new Terminal("("), Condition, new Terminal(")"), Clause, Else)));
+        SymbolString symbolString101 = new SymbolString(new ArrayList<>(Arrays.asList(new Terminal("else"), Clause)));
         SymbolString symbolString12 = new SymbolString(new ArrayList<>(Arrays.asList(Terminal.IDENTIFIER, new Terminal("=="), Terminal.IDENTIFIER)));
         SymbolString symbolString13 = new SymbolString(new ArrayList<>(Arrays.asList(new Terminal("{"), Entrance, new Terminal("}"))));
         SymbolString symbolString14 = new SymbolString(new ArrayList<>(Arrays.asList(Stmt)));
@@ -221,6 +223,7 @@ public class CompilerInstance {
         ProductionRule productionRule4 = new ProductionRule(Entrance, new ArrayList<>(Arrays.asList(symbolString7, symbolString77)));
         ProductionRule productionRule5 = new ProductionRule(Stmt, new ArrayList<>(Arrays.asList(symbolString8, symbolString9)));
         ProductionRule productionRule6 = new ProductionRule(If, new ArrayList<>(Arrays.asList(symbolString10)));
+        ProductionRule productionRule66 = new ProductionRule(If, new ArrayList<>(Arrays.asList(symbolString101)));
         ProductionRule productionRule7 = new ProductionRule(Condition, new ArrayList<>(Arrays.asList(symbolString12)));
         ProductionRule productionRule8 = new ProductionRule(Clause, new ArrayList<>(Arrays.asList(symbolString13, symbolString14)));
         ProductionRule productionRule9 = new ProductionRule(Entrance_, new ArrayList<>(Arrays.asList(symbolString15)));
@@ -230,6 +233,7 @@ public class CompilerInstance {
         compiler6.defineProductionRule(Entrance, productionRule4);
         compiler6.defineProductionRule(Stmt, productionRule5);
         compiler6.defineProductionRule(If, productionRule6);
+        compiler6.defineProductionRule(Else, productionRule66);
         compiler6.defineProductionRule(Condition, productionRule7);
         compiler6.defineProductionRule(Clause, productionRule8);
         compiler6.defineProductionRule(A, productionRule11);

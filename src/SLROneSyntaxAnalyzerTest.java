@@ -35,9 +35,7 @@ class SLROneSyntaxAnalyzerTest {
         String s = "test/example4.c";
         try {
             compiler.compile(s);
-            assertEquals("*\ti\tj\t__TMP10__\r\n" +
-                            "-\tk\ti\t__TMP16__\r\n" +
-                            "No\r\n",
+            assertEquals("No" + System.lineSeparator(),
                     FileUtils.readFileToString(new File("test/example4.syn"), Charset.defaultCharset()));
         } catch (IOException | IllegalSyntaxException e) {
             e.printStackTrace();
@@ -85,7 +83,20 @@ class SLROneSyntaxAnalyzerTest {
         String s = "test/example12.c";
         try {
             compiler.compile(s);
-            assertEquals("Yes",
+            assertEquals("*\ti\tk\t__TMP11__\r\n" +
+                            "+\tj\t__TMP11__\t__TMP12__\r\n" +
+                            "+\t__TMP12__\tl\t__TMP16__\r\n" +
+                            "/\t__TMP16__\ti\t__TMP19__\r\n" +
+                            "=\t__TMP19__\tnull\tabc\r\n" +
+                            "==\t1\t1\t7\r\n" +
+                            "jmp\tnull\tnull\t13\r\n" +
+                            "=\tabc\tnull\tok\r\n" +
+                            "-\tj\tl\t__TMP30__\r\n" +
+                            "*\ti\tk\t__TMP36__\r\n" +
+                            "+\t__TMP30__\t__TMP36__\t__TMP37__\r\n" +
+                            "=\t__TMP37__\tnull\tabc\r\n" +
+                            "jmp\tnull\tnull\t14\r\n" +
+                            "=\t0\tnull\tabc\r\n",
                     FileUtils.readFileToString(new File("test/example12.syn"), Charset.defaultCharset()));
         } catch (IOException | IllegalSyntaxException e) {
             e.printStackTrace();

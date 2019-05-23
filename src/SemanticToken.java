@@ -2,7 +2,12 @@ public class SemanticToken {
     private final Integer op;
     private final SymbolInfo arg1;
     private final SymbolInfo arg2;
-    private final SymbolInfo result;
+    private SymbolInfo result;
+
+    public void setJumpResult(Integer i) {
+        this.result = new SymbolInfo(i);
+    }
+
 
     @Override
     public String toString() {
