@@ -426,7 +426,7 @@ public class SLROneSyntaxAnalyzer extends SyntaxAnalyzer {
 
     private void initStack() {
         analyzeStack.push(Terminal.END);
-        stateStack.push(startProjectIndex.projectNumber);
+        stateStack.push(0);
     }
 
     private SLROneProjects slrOneProjects; // all projects
