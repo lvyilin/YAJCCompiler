@@ -211,6 +211,10 @@ public class CompilerInstance {
         SymbolString symbolString10 = new SymbolString(new ArrayList<>(Arrays.asList(new Terminal("if"), new Terminal("("), Condition, new Terminal(")"), Clause, Else)));
         SymbolString symbolString101 = new SymbolString(new ArrayList<>(Arrays.asList(new Terminal("else"), Clause)));
         SymbolString symbolString12 = new SymbolString(new ArrayList<>(Arrays.asList(Terminal.IDENTIFIER, new Terminal("=="), Terminal.IDENTIFIER)));
+        SymbolString symbolString121 = new SymbolString(new ArrayList<>(Arrays.asList(Terminal.IDENTIFIER, new Terminal("<"), Terminal.IDENTIFIER)));
+        SymbolString symbolString122 = new SymbolString(new ArrayList<>(Arrays.asList(Terminal.IDENTIFIER, new Terminal("<="), Terminal.IDENTIFIER)));
+        SymbolString symbolString123 = new SymbolString(new ArrayList<>(Arrays.asList(Terminal.IDENTIFIER, new Terminal(">"), Terminal.IDENTIFIER)));
+        SymbolString symbolString124 = new SymbolString(new ArrayList<>(Arrays.asList(Terminal.IDENTIFIER, new Terminal(">="), Terminal.IDENTIFIER)));
         SymbolString symbolString13 = new SymbolString(new ArrayList<>(Arrays.asList(new Terminal("{"), Entrance, new Terminal("}"))));
         SymbolString symbolString14 = new SymbolString(new ArrayList<>(Arrays.asList(Stmt)));
         SymbolString symbolString15 = new SymbolString(new ArrayList<>(Arrays.asList(Entrance)));
@@ -224,7 +228,7 @@ public class CompilerInstance {
         ProductionRule productionRule5 = new ProductionRule(Stmt, new ArrayList<>(Arrays.asList(symbolString8, symbolString9)));
         ProductionRule productionRule6 = new ProductionRule(If, new ArrayList<>(Arrays.asList(symbolString10)));
         ProductionRule productionRule66 = new ProductionRule(If, new ArrayList<>(Arrays.asList(symbolString101)));
-        ProductionRule productionRule7 = new ProductionRule(Condition, new ArrayList<>(Arrays.asList(symbolString12)));
+        ProductionRule productionRule7 = new ProductionRule(Condition, new ArrayList<>(Arrays.asList(symbolString12, symbolString121, symbolString122, symbolString123, symbolString124)));
         ProductionRule productionRule8 = new ProductionRule(Clause, new ArrayList<>(Arrays.asList(symbolString13, symbolString14)));
         ProductionRule productionRule9 = new ProductionRule(Entrance_, new ArrayList<>(Arrays.asList(symbolString15)));
 

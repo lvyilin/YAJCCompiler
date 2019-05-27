@@ -102,4 +102,31 @@ class SLROneSyntaxAnalyzerTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    void testCase6() {
+        compiler = CompilerInstance.compiler6;
+
+        String s = "test/example13.c";
+        try {
+            compiler.compile(s);
+            assertEquals("*\ti\tk\t__TMP11__\r\n" +
+                            "+\tj\t__TMP11__\t__TMP12__\r\n" +
+                            "+\t__TMP12__\tl\t__TMP16__\r\n" +
+                            "/\t__TMP16__\ti\t__TMP19__\r\n" +
+                            "=\t__TMP19__\tnull\tabc\r\n" +
+                            "<\tk\ti\t7\r\n" +
+                            "jmp\tnull\tnull\t13\r\n" +
+                            "=\tabc\tnull\tok\r\n" +
+                            "-\tj\tl\t__TMP29__\r\n" +
+                            "*\ti\tk\t__TMP35__\r\n" +
+                            "+\t__TMP29__\t__TMP35__\t__TMP36__\r\n" +
+                            "=\t__TMP36__\tnull\tabc\r\n" +
+                            "jmp\tnull\tnull\t14\r\n" +
+                            "=\t0\tnull\tabc\r\n",
+                    FileUtils.readFileToString(new File("test/example13.syn"), Charset.defaultCharset()));
+        } catch (IOException | IllegalSyntaxException e) {
+            e.printStackTrace();
+        }
+    }
 }
